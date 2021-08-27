@@ -18,4 +18,13 @@ class Brand extends Model
             });
         });
     }
+
+    public function cheapestProductWorkaround(): HasOne
+    {
+        return $this->hasOne(Product::class)
+            ->ofMany(['price' => 'min'])
+            ->whereHas('category', function ($query) {
+                $query->where('published', true);
+            });
+    }
 }
