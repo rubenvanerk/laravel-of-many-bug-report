@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $cheapestProduct = Brand::query()->first()->cheapestProduct;
+    $actuallyCheapestProduct = \App\Models\Product::query()->whereHas('category', function ($query) {
+        $query->where('published', 1);
+    })->orderBy('price')->first();
+
+    return view('home', compact('cheapestProduct', 'actuallyCheapestProduct'));
 });
+
