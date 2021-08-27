@@ -64,5 +64,9 @@ class DatabaseSeeder extends Seeder
             ->state(function (array $attributes) use ($unpublishedCategory, $brand) {
                 return ['price' => 70, 'category_id' => $unpublishedCategory->id, 'brand_id' => $brand->id];
             })->create();
+
+        foreach (Category::all() as $category) {
+            $category->update(['published' => !$category->published]);
+        }
     }
 }
