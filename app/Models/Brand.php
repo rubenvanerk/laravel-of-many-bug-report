@@ -12,7 +12,7 @@ class Brand extends Model
 
     public function cheapestProduct(): HasOne
     {
-        return $this->hasOne(Product::class)->ofMany(['price' => 'min'], function ($query) {
+        return $this->hasOne(Product::class)->ofMany(['price' => 'min', 'id' => 'min'], function ($query) {
             $query->whereHas('category', function ($query) {
                 $query->where('published', true);
             });

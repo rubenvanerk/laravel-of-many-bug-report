@@ -12,6 +12,10 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'published' => 'bool',
+    ];
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
